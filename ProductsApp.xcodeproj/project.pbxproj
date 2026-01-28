@@ -23,6 +23,8 @@
 		222345972F23C88D004E63C3 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222345962F23C88D004E63C3 /* Product.swift */; };
 		22252FFD2F25889A0091DD68 /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22252FFC2F25889A0091DD68 /* MockAPIClient.swift */; };
 		22252FFF2F2588D60091DD68 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22252FFE2F2588D60091DD68 /* NetworkServiceTests.swift */; };
+		226DEFA22F2AB5B600F96642 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DEFA12F2AB5B600F96642 /* NetworkServiceProtocol.swift */; };
+		226DEFA42F2AB5D500F96642 /* ProductsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DEFA32F2AB5D500F96642 /* ProductsListViewModelTests.swift */; };
 		227037782F27AC8A00A0745C /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227037772F27AC8A00A0745C /* ProductsViewController.swift */; };
 		2270377B2F27AF8900A0745C /* ProductCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227037792F27AF8900A0745C /* ProductCellView.swift */; };
 		2270377C2F27AF8900A0745C /* ProductCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2270377A2F27AF8900A0745C /* ProductCellView.xib */; };
@@ -76,6 +78,8 @@
 		222345962F23C88D004E63C3 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		22252FFC2F25889A0091DD68 /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
 		22252FFE2F2588D60091DD68 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		226DEFA12F2AB5B600F96642 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
+		226DEFA32F2AB5D500F96642 /* ProductsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListViewModelTests.swift; sourceTree = "<group>"; };
 		227037772F27AC8A00A0745C /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		227037792F27AF8900A0745C /* ProductCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellView.swift; sourceTree = "<group>"; };
 		2270377A2F27AF8900A0745C /* ProductCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductCellView.xib; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				2223456A2F23BE88004E63C3 /* ProductsAppTests.swift */,
 				22252FFC2F25889A0091DD68 /* MockAPIClient.swift */,
 				22252FFE2F2588D60091DD68 /* NetworkServiceTests.swift */,
+				226DEFA12F2AB5B600F96642 /* NetworkServiceProtocol.swift */,
+				226DEFA32F2AB5D500F96642 /* ProductsListViewModelTests.swift */,
 			);
 			path = ProductsAppTests;
 			sourceTree = "<group>";
@@ -460,6 +466,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2223456B2F23BE88004E63C3 /* ProductsAppTests.swift in Sources */,
+				226DEFA22F2AB5B600F96642 /* NetworkServiceProtocol.swift in Sources */,
+				226DEFA42F2AB5D500F96642 /* ProductsListViewModelTests.swift in Sources */,
 				22252FFF2F2588D60091DD68 /* NetworkServiceTests.swift in Sources */,
 				22252FFD2F25889A0091DD68 /* MockAPIClient.swift in Sources */,
 			);
