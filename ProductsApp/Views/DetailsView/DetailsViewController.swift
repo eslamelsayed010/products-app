@@ -8,14 +8,15 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-
+    var product: Product?
+    
     @IBOutlet weak var productDesc: UILabel!
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var viewProductButton: UIButton!
     @IBOutlet weak var category: UILabel!
     @IBAction func viewProductTapped(_ sender: Any) {
-        print("TAPED")
+        navigationController?.popViewController(animated: true)
     }
     @IBOutlet weak var categoryContainer: UIView!
     @IBOutlet weak var productRate: UILabel!
@@ -29,6 +30,7 @@ class DetailsViewController: UIViewController {
         
         setupCategoryContainer()
         roundBottomCornersOfImage()
+        displayProduct()
     }
     
     private func setupCategoryContainer() {
@@ -39,11 +41,29 @@ class DetailsViewController: UIViewController {
     private func roundBottomCornersOfImage() {
         productImage.layer.cornerRadius = 24
         productImage.layer.maskedCorners = [
-            .layerMinXMaxYCorner, 
-            .layerMaxXMaxYCorner
+            .layerMinXMaxYCorner,
+                .layerMaxXMaxYCorner
         ]
         productImage.layer.masksToBounds = true
         viewProductButton.configuration?.imagePadding = 8
     }
-
+    
+    private func displayProduct() {
+        guard let product = product else { return }
+        productTitle.text = product.title
+        productDesc.text = product.description
+        category.text = product.category
+        productRate.text = "\(product.rating.rate)"
+        ratingsCount.text = "\(product.rating.count)"
+        
+        if product.image.starts(with: "http") {
+            productImage.sd_setImage(
+                with: URL(string: product.image),
+                placeholderImage: UIImage(named: "2"),
+                options: [.progressiveLoad, .retryFailed]
+            )
+        } else {
+            productImage.image = UIImage(named: product.image)
+        }
+    }
 }

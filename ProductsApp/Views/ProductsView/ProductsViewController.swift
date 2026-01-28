@@ -168,4 +168,17 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard !viewModel.isLoading else { return }
+
+        let selectedProduct = viewModel.products[indexPath.row]
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
+        
+        detailsVC.product = selectedProduct
+        navigationController?.pushViewController(detailsVC, animated: true)
+    }
+
 }
