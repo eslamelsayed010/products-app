@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class HeaderView: UICollectionReusableView {
 
@@ -22,13 +23,22 @@ final class HeaderView: UICollectionReusableView {
         return label
     }()
     
+    private let recommendationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Recommendation"
+        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        return label
+    }()
+    
     private var carouselCollectionView: UICollectionView!
-    private let images = ["3", "2", "3"]
+    private var imageUrls: [String] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCarousel()
         addSubview(titleLabel)
+        addSubview(recommendationLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -54,31 +64,41 @@ final class HeaderView: UICollectionReusableView {
     }
 
     override func layoutSubviews() {
-            super.layoutSubviews()
+        super.layoutSubviews()
 
-            let labelHeight: CGFloat = 30
-            let horizontalPadding: CGFloat = 16
+        let labelHeight: CGFloat = 30
+        let horizontalPadding: CGFloat = 16
+        let recommendationLabelHeight: CGFloat = 35
+        let spacing: CGFloat = 8
 
-            titleLabel.frame = CGRect(
-                x: horizontalPadding,
-                y: 8,
-                width: bounds.width - horizontalPadding * 2,
-                height: labelHeight
-            )
+        titleLabel.frame = CGRect(
+            x: horizontalPadding,
+            y: 8,
+            width: bounds.width - horizontalPadding * 2,
+            height: labelHeight
+        )
 
-            let carouselY = titleLabel.frame.maxY 
-            carouselCollectionView.frame = CGRect(
-                x: 0,
-                y: carouselY,
-                width: bounds.width,
-                height: bounds.height - carouselY
-            )
+        let carouselY = titleLabel.frame.maxY
+        let carouselHeight = bounds.height - labelHeight - recommendationLabelHeight - spacing - 8
+        
+        carouselCollectionView.frame = CGRect(
+            x: 0,
+            y: carouselY,
+            width: bounds.width,
+            height: carouselHeight
+        )
 
-            if let layout = carouselCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                layout.itemSize = carouselCollectionView.bounds.size
-            }
+        recommendationLabel.frame = CGRect(
+            x: horizontalPadding,
+            y: carouselCollectionView.frame.maxY + spacing,
+            width: bounds.width - horizontalPadding * 2,
+            height: recommendationLabelHeight
+        )
+
+        if let layout = carouselCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.itemSize = carouselCollectionView.bounds.size
         }
-
+    }
 
     private func startAutoScroll() {
         autoScrollTimer?.invalidate()
@@ -93,34 +113,31 @@ final class HeaderView: UICollectionReusableView {
         autoScrollTimer = nil
     }
 
-
     private func scrollToNextItem() {
-        guard !images.isEmpty else { return }
+        guard !imageUrls.isEmpty else { return }
         
-        currentIndex = (currentIndex + 1) % images.count
+        currentIndex = (currentIndex + 1) % imageUrls.count
         
         let indexPath = IndexPath(item: currentIndex, section: 0)
         carouselCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
-    
-    public func configure() {
+    public func configure(with imageUrls: [String]) {
+        self.imageUrls = imageUrls
         carouselCollectionView.reloadData()
         startAutoScroll()
     }
-
 }
 
 extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return imageUrls.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CarouselCell", for: indexPath) as! CarouselCell
-        cell.configure(with: images[indexPath.item])
+        cell.configure(with: imageUrls[indexPath.item])
         return cell
     }
 }
-

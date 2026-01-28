@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="376" height="301"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="jxK-QB-zYd">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="jxK-QB-zYd">
                         <rect key="frame" x="0.0" y="0.0" width="376" height="150"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="150" id="8Xf-Oe-kKP"/>
@@ -89,6 +89,7 @@
                 <outlet property="imageView" destination="jxK-QB-zYd" id="F4D-6E-fEH"/>
                 <outlet property="price" destination="CtW-kV-aSW" id="RHI-Ws-PqW"/>
                 <outlet property="rate" destination="NSe-4v-yDi" id="aMv-ZT-BGF"/>
+                <outlet property="starIcon" destination="R58-3m-3KZ" id="skf-Oz-Z1e"/>
                 <outlet property="title" destination="wHV-7T-udZ" id="m4q-bW-UYY"/>
             </connections>
             <point key="canvasLocation" x="-491.60305343511448" y="103.87323943661973"/>

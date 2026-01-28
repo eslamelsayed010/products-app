@@ -30,6 +30,11 @@
 		22D35E402F28C09700DE9E24 /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D35E3F2F28C09700DE9E24 /* CarouselCell.swift */; };
 		22D35E442F28CCC000DE9E24 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D35E432F28CCC000DE9E24 /* DetailsViewController.swift */; };
 		22D35E472F28CD9300DE9E24 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D35E462F28CD9300DE9E24 /* Consts.swift */; };
+		22D35E502F292ECD00DE9E24 /* ProductsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D35E4F2F292ECD00DE9E24 /* ProductsListViewModel.swift */; };
+		22D35E532F29362500DE9E24 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 22D35E522F29362500DE9E24 /* SDWebImage */; };
+		22D35E552F29362500DE9E24 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 22D35E542F29362500DE9E24 /* SDWebImageMapKit */; };
+		22D35E582F294B9E00DE9E24 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D35E572F294B9E00DE9E24 /* SkeletonView.swift */; };
+		22D35E5B2F296D8800DE9E24 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 22D35E5A2F296D8800DE9E24 /* SkeletonView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +83,8 @@
 		22D35E3F2F28C09700DE9E24 /* CarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		22D35E432F28CCC000DE9E24 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		22D35E462F28CD9300DE9E24 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
+		22D35E4F2F292ECD00DE9E24 /* ProductsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListViewModel.swift; sourceTree = "<group>"; };
+		22D35E572F294B9E00DE9E24 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D35E552F29362500DE9E24 /* SDWebImageMapKit in Frameworks */,
+				22D35E5B2F296D8800DE9E24 /* SkeletonView in Frameworks */,
+				22D35E532F29362500DE9E24 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +183,7 @@
 		222345872F23C30E004E63C3 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				22D35E4F2F292ECD00DE9E24 /* ProductsListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -270,9 +281,18 @@
 		22D35E4B2F28CEEA00DE9E24 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				22D35E562F294B6C00DE9E24 /* CustomView */,
 				22D35E462F28CD9300DE9E24 /* Consts.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		22D35E562F294B6C00DE9E24 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				22D35E572F294B9E00DE9E24 /* SkeletonView.swift */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +311,11 @@
 			dependencies = (
 			);
 			name = ProductsApp;
+			packageProductDependencies = (
+				22D35E522F29362500DE9E24 /* SDWebImage */,
+				22D35E542F29362500DE9E24 /* SDWebImageMapKit */,
+				22D35E5A2F296D8800DE9E24 /* SkeletonView */,
+			);
 			productName = ProductsApp;
 			productReference = 2223454C2F23BE86004E63C3 /* ProductsApp.app */;
 			productType = "com.apple.product-type.application";
@@ -363,6 +388,10 @@
 				Base,
 			);
 			mainGroup = 222345432F23BE86004E63C3;
+			packageReferences = (
+				22D35E512F29362500DE9E24 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				22D35E592F296D8800DE9E24 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+			);
 			productRefGroup = 2223454D2F23BE86004E63C3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -420,7 +449,9 @@
 				22D35E402F28C09700DE9E24 /* CarouselCell.swift in Sources */,
 				22D35E472F28CD9300DE9E24 /* Consts.swift in Sources */,
 				22D35E442F28CCC000DE9E24 /* DetailsViewController.swift in Sources */,
+				22D35E582F294B9E00DE9E24 /* SkeletonView.swift in Sources */,
 				2270377F2F27B3AE00A0745C /* HeaderView.swift in Sources */,
+				22D35E502F292ECD00DE9E24 /* ProductsListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +796,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22D35E512F29362500DE9E24 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.5;
+			};
+		};
+		22D35E592F296D8800DE9E24 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22D35E522F29362500DE9E24 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22D35E512F29362500DE9E24 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		22D35E542F29362500DE9E24 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22D35E512F29362500DE9E24 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+		22D35E5A2F296D8800DE9E24 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22D35E592F296D8800DE9E24 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		222345582F23BE86004E63C3 /* ProductsApp.xcdatamodeld */ = {

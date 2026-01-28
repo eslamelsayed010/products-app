@@ -9,6 +9,16 @@ import UIKit
 
 class ProductsViewController: UIViewController {
     var collectionView: UICollectionView?
+    private let apiClient: APIClientProtocol = APIClient()
+
+    private lazy var networkService: NetworkServiceProtocol = {
+        NetworkService(apiClient: apiClient)
+    }()
+
+    private lazy var viewModel: ProductsListViewModel = {
+        ProductsListViewModel(networkService: networkService)
+    }()
+
     
     private let productsLabel: UILabel = {
         let label = UILabel()
@@ -18,11 +28,35 @@ class ProductsViewController: UIViewController {
         return label
     }()
     
+    private let cartImageView: UIImageView = {
+        let imageView = UIImageView()
+        let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
+        let image = UIImage(systemName: "cart.fill", withConfiguration: config)
+        imageView.image = image
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(productsLabel)
+        view.addSubview(cartImageView)
         setupCollectionView(layout: setupLayout())
+        bindViewModel()
+        viewModel.fetchInitialProducts()
+        
     }
     
     
@@ -31,11 +65,21 @@ class ProductsViewController: UIViewController {
         
         let labelHeight: CGFloat = 40
         let topPadding: CGFloat = view.safeAreaInsets.top + 8
+        let horizontalPadding: CGFloat = 16
+        let cartImageSize: CGFloat = 30
+        let spacing: CGFloat = 8
+        
+        cartImageView.frame = CGRect(
+            x: view.bounds.width - horizontalPadding - cartImageSize,
+            y: topPadding + 5,
+            width: cartImageSize,
+            height: cartImageSize
+        )
         
         productsLabel.frame = CGRect(
-            x: 16,
+            x: horizontalPadding,
             y: topPadding,
-            width: view.bounds.width - 32,
+            width: view.bounds.width - (horizontalPadding * 2) - cartImageSize - spacing,
             height: labelHeight
         )
         
@@ -71,27 +115,56 @@ class ProductsViewController: UIViewController {
         layout.itemSize = CGSize(width: width, height: height)
         return layout
     }
+    
+    private func bindViewModel() {
+        viewModel.onDataUpdated = { [weak self] in
+            self?.collectionView?.reloadData()
+        }
+    }
 }
 
 extension ProductsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
-        header.configure()
+        
+        if viewModel.isLoading {
+            header.configure(with: ["", "", ""])
+        } else {
+            let carouselImages = viewModel.products.prefix(7).map { $0.image }
+            header.configure(with: Array(carouselImages))
+        }
+        
         return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.size.width, height: 250)
+        return CGSize(width: view.frame.size.width, height: 350)
     }
 }
 
 extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return viewModel.isLoading ? 6 : viewModel.products.count
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        if !viewModel.isLoading {
+            viewModel.fetchMoreProductsIfNeeded(currentIndex: indexPath.row)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCellView.identifier, for: indexPath) as! ProductCellView
+        
+        if viewModel.isLoading {
+            cell.showSkeleton()
+        } else {
+            cell.configure(viewModel.products[indexPath.row])
+        }
         
         return cell
     }
