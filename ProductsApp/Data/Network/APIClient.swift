@@ -28,7 +28,20 @@ class APIClient: APIClientProtocol {
     ) {
         let task = session.dataTask(with: url) { data, response, error in
             
-            if let _ = error {
+            if let error = error {
+                // Check if it's a network connectivity issue
+                let nsError = error as NSError
+                if nsError.domain == NSURLErrorDomain {
+                    switch nsError.code {
+                    case NSURLErrorNotConnectedToInternet,
+                         NSURLErrorNetworkConnectionLost,
+                         NSURLErrorDataNotAllowed:
+                        completion(.failure(.noInternet))
+                        return
+                    default:
+                        break
+                    }
+                }
                 completion(.failure(.unknown))
                 return
             }
@@ -59,4 +72,3 @@ class APIClient: APIClientProtocol {
         task.resume()
     }
 }
-

@@ -56,7 +56,6 @@ class ProductsViewController: UIViewController {
         setupCollectionView(layout: setupLayout())
         bindViewModel()
         viewModel.fetchInitialProducts()
-        
     }
     
     
@@ -120,6 +119,51 @@ class ProductsViewController: UIViewController {
         viewModel.onDataUpdated = { [weak self] in
             self?.collectionView?.reloadData()
         }
+        
+        viewModel.onError = { [weak self] error in
+            self?.showErrorAlert(error: error)
+        }
+    }
+    
+    // MARK: - Error Handling
+    private func showErrorAlert(error: NetworkError) {
+        let alert = UIAlertController(
+            title: getErrorTitle(for: error),
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+        
+        if shouldShowRetry(for: error) {
+            alert.addAction(UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+                self?.viewModel.fetchInitialProducts()
+            })
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
+    private func getErrorTitle(for error: NetworkError) -> String {
+        switch error {
+        case .noInternet:
+            return "No Internet Connection"
+        case .serverError:
+            return "Server Error"
+        case .decodingError:
+            return "Data Error"
+        default:
+            return "Error"
+        }
+    }
+    
+    private func shouldShowRetry(for error: NetworkError) -> Bool {
+        switch error {
+        case .noInternet, .serverError, .unknown:
+            return true
+        default:
+            return false
+        }
     }
 }
 
@@ -180,5 +224,4 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
         detailsVC.product = selectedProduct
         navigationController?.pushViewController(detailsVC, animated: true)
     }
-
 }

@@ -19,7 +19,7 @@ class ProductsListViewModel {
 
     var onDataUpdated: (() -> Void)?
     var onLoadingStateChange: ((Bool) -> Void)?
-    var onError: ((String) -> Void)?
+    var onError: ((NetworkError) -> Void)? 
 
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
@@ -54,7 +54,7 @@ class ProductsListViewModel {
                     self.loadNextPage()
 
                 case .failure(let error):
-                    self.onError?(error.localizedDescription)
+                    self.onError?(error)
                 }
             }
         }
