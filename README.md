@@ -4,6 +4,15 @@
 This project is an iOS application developed as part of the **TRU iOS Technical Assessment**.  
 It focuses on clean architecture, UIKit best practices, and handling real-world scenarios such as pagination, offline support, and error handling.
 
+## Demo
+Short demo video showcasing the main features:
+- Products list (grid & list)
+- Pagination
+- Product details
+- Offline handling
+
+🎥 Demo Video: https://drive.google.com/file/d/1qexlRPhrqpiWNShuPzf6tHuLRJNrAiIk/view?usp=drive_link
+
 ---
 
 ## Features
